@@ -1,20 +1,21 @@
-//
-//  TodoAppApp.swift
-//  TodoApp
-//
-//  Created by Olcay Güneş on 22.11.2024.
-//
-
 import SwiftUI
+import UserNotifications
 
 @main
 struct TodoAppApp: App {
-    let persistenceController = PersistenceController.shared
-
+    init() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+            if granted {
+                print("Bildirim izni verildi")
+            } else {
+                print("Bildirim izni reddedildi")
+            }
+        }
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
