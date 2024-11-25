@@ -42,7 +42,7 @@ struct ContentView: View {
         NavigationView {
             VStack(spacing: 0) {
                 // Başlık kısmı
-                Text("Yapılacaklar")
+                Text("Görevler")
                     .font(.system(size: 32, weight: .bold))
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
@@ -80,12 +80,13 @@ struct ContentView: View {
                     }
                     
                     TextField("", text: $newTodoTitle)
-                        .padding(10)
-                        .background(Color(.systemGray6))
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .padding()
+                        .background(Color(uiColor: .systemBackground))
                         .cornerRadius(8)
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color(.systemGray4), lineWidth: 1)
+                                .stroke(Color(uiColor: .systemGray5), lineWidth: 1)
                         )
                         .overlay(
                             Text("Görev")

@@ -1,21 +1,16 @@
 import SwiftUI
-import UserNotifications
 
 @main
 struct TodoAppApp: App {
-    init() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
-            if granted {
-                print("Bildirim izni verildi")
-            } else {
-                print("Bildirim izni reddedildi")
-            }
-        }
-    }
+    @StateObject private var store = TodoStore()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(store)
+                .onAppear {
+                    NotificationManager.shared.requestAuthorization()
+                }
         }
     }
 }

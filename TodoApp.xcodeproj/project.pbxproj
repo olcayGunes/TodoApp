@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C1CE3F622CF4646400309171 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CE3F612CF4646400309171 /* NotificationManager.swift */; };
 		C1E37C5A2CF0E12C00EF5614 /* TodoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E37C592CF0E12C00EF5614 /* TodoAppApp.swift */; };
 		C1E37C5C2CF0E12C00EF5614 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E37C5B2CF0E12C00EF5614 /* ContentView.swift */; };
 		C1E37C5E2CF0E12F00EF5614 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1E37C5D2CF0E12F00EF5614 /* Assets.xcassets */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C1CE3F612CF4646400309171 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		C1E37C562CF0E12C00EF5614 /* TodoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1E37C592CF0E12C00EF5614 /* TodoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoAppApp.swift; sourceTree = "<group>"; };
 		C1E37C5B2CF0E12C00EF5614 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			children = (
 				C1E37C8A2CF0E29A00EF5614 /* Todo.swift */,
 				C1E37C8E2CF0E51F00EF5614 /* TodoStore.swift */,
+				C1CE3F612CF4646400309171 /* NotificationManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				C1E37C632CF0E12F00EF5614 /* Persistence.swift in Sources */,
 				C1E37C952CF101E100EF5614 /* EditTodoView.swift in Sources */,
 				C1E37C912CF0FA3700EF5614 /* StatisticView.swift in Sources */,
+				C1CE3F622CF4646400309171 /* NotificationManager.swift in Sources */,
 				C1E37C8D2CF0E48F00EF5614 /* TodoRowView.swift in Sources */,
 				C1E37C5C2CF0E12C00EF5614 /* ContentView.swift in Sources */,
 				C1E37C5A2CF0E12C00EF5614 /* TodoAppApp.swift in Sources */,
@@ -467,6 +471,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TodoApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 2F7C5N2CG9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -495,6 +500,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TodoApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 2F7C5N2CG9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

@@ -1,9 +1,11 @@
 import Foundation
+import UserNotifications
 
 class TodoStore: ObservableObject {
     @Published var todos: [Todo] = [] {
         didSet {
             saveTodos()
+            updateNotifications()
         }
     }
     
@@ -11,6 +13,7 @@ class TodoStore: ObservableObject {
     
     init() {
         loadTodos()
+        NotificationManager.shared.requestAuthorization()
     }
     
     private func loadTodos() {
@@ -24,6 +27,14 @@ class TodoStore: ObservableObject {
     private func saveTodos() {
         if let encodedData = try? JSONEncoder().encode(todos) {
             UserDefaults.standard.set(encodedData, forKey: todosKey)
+        }
+    }
+    
+    private func updateNotifications() {
+        for todo in todos {
+            if let reminder = todo.reminder, reminder > Date() {
+                NotificationManager.shared.scheduleNotification(for: todo)
+            }
         }
     }
 }
