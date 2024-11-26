@@ -44,16 +44,6 @@ struct PieChartView: View {
                     PieSlice(pieSliceData: slices[index])
                         .fill(slices[index].color)
                 }
-                
-                // Merkezdeki toplam sayı
-                VStack {
-                    Text("\(totalValue)")
-                        .font(.title2)
-                        .bold()
-                    Text("Toplam")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                }
             }
             .frame(width: min(geometry.size.width, geometry.size.height),
                    height: min(geometry.size.width, geometry.size.height))

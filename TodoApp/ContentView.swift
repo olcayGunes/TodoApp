@@ -7,8 +7,9 @@ struct ContentView: View {
     @State private var newTodoDescription: String = ""
     @State private var selectedPriority: Priority = .orta
     @State private var isReminderEnabled: Bool = false
-    @State private var selectedDate: Date = Date()
+    @State private var selectedDate: Date = Date().addingTimeInterval(60) // 1 dakika sonrası
     @AppStorage("hideCompletedTasks") private var hideCompletedTasks = false
+    @State private var collapsedSections: Set<String> = []
     
     private var filteredAndGroupedTodos: [(String, [Todo])] {
         let calendar = Calendar.current
@@ -20,12 +21,10 @@ struct ContentView: View {
             let dateString = formatDate(date)
             var filteredTodos = todos
             
-            // Eğer hideCompletedTasks true ise, tamamlanmış görevleri filtrele
             if hideCompletedTasks {
                 filteredTodos = todos.filter { !$0.isCompleted }
             }
             
-            // Görevleri sırala
             let sortedTodos = filteredTodos.sorted { first, second in
                 if first.isCompleted == second.isCompleted {
                     return first.createdAt > second.createdAt
@@ -35,7 +34,13 @@ struct ContentView: View {
             
             return (dateString, sortedTodos)
         }
-        .sorted { $0.0 > $1.0 }
+        .sorted { first, second in
+            if first.0 == "Bugün" { return true }
+            if second.0 == "Bugün" { return false }
+            if first.0 == "Dün" { return true }
+            if second.0 == "Dün" { return false }
+            return first.0 > second.0
+        }
     }
     
     var body: some View {
@@ -123,10 +128,14 @@ struct ContentView: View {
                             Text("Hatırlatma Zamanı:")
                                 .foregroundColor(.gray)
                             
-                            DatePicker("", selection: $selectedDate, displayedComponents: [.date, .hourAndMinute])
-                                .environment(\.locale, Locale(identifier: "tr_TR"))
-                                .labelsHidden()
-                                .datePickerStyle(.compact)
+                            DatePicker("",
+                                selection: $selectedDate,
+                                in: Date()...,
+                                displayedComponents: [.date, .hourAndMinute]
+                            )
+                            .environment(\.locale, Locale(identifier: "tr_TR"))
+                            .labelsHidden()
+                            .datePickerStyle(.compact)
                         }
                     }
                     
@@ -144,16 +153,39 @@ struct ContentView: View {
                 // Görev listesi
                 List {
                     ForEach(filteredAndGroupedTodos, id: \.0) { date, todos in
-                        Section(header: Text(date)) {
-                            ForEach(todos) { todo in
-                                TodoRowView(todo: todo) { updatedTodo in
-                                    if let index = todoStore.todos.firstIndex(where: { $0.id == updatedTodo.id }) {
-                                        todoStore.todos[index] = updatedTodo
+                        Section {
+                            if !collapsedSections.contains(date) || date == "Bugün" {
+                                ForEach(todos) { todo in
+                                    TodoRowView(todo: todo) { updatedTodo in
+                                        if let index = todoStore.todos.firstIndex(where: { $0.id == updatedTodo.id }) {
+                                            todoStore.todos[index] = updatedTodo
+                                        }
                                     }
                                 }
+                                .onDelete { indexSet in
+                                    deleteTodos(at: indexSet, in: todos)
+                                }
                             }
-                            .onDelete { indexSet in
-                                deleteTodos(at: indexSet, in: todos)
+                        } header: {
+                            HStack {
+                                Text(date)
+                                Spacer()
+                                if date != "Bugün" {
+                                    Image(systemName: collapsedSections.contains(date) ? "chevron.right" : "chevron.down")
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                if date != "Bugün" {
+                                    withAnimation {
+                                        if collapsedSections.contains(date) {
+                                            collapsedSections.remove(date)
+                                        } else {
+                                            collapsedSections.insert(date)
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -179,10 +211,12 @@ struct ContentView: View {
             scheduleNotification(for: todo)
         }
         
+        // Form'u sıfırla
         newTodoTitle = ""
         newTodoDescription = ""
         selectedPriority = .orta
         isReminderEnabled = false
+        selectedDate = Date().addingTimeInterval(60) // Yeni görev için 1 dakika sonrasını ayarla
     }
     
     private func deleteTodos(at offsets: IndexSet, in todosList: [Todo]) {
