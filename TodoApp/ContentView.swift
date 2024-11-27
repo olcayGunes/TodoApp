@@ -58,7 +58,7 @@ struct ContentView: View {
                     .overlay(
                         NavigationLink(destination: StatisticsView(todoStore: todoStore)) {
                             Image(systemName: "chart.bar.fill")
-                                .foregroundColor(.blue)
+                                .foregroundColor(Color.mainColor)
                                 .padding()
                         }
                         .accessibilityIdentifier("statisticsButton")
@@ -69,6 +69,7 @@ struct ContentView: View {
                 Toggle(isOn: $hideCompletedTasks) {
                     Text("Yapılan görevleri gizle")
                 }
+                .tint(.mainColor)
                 .padding(.horizontal)
                 .padding(.vertical, 8)
                 .accessibilityIdentifier("hideCompletedToggle")
@@ -129,6 +130,7 @@ struct ContentView: View {
                     
                     HStack {
                         Toggle("Hatırlatma", isOn: $isReminderEnabled)
+                            .tint(.mainColor)
                             .accessibilityIdentifier("reminderToggle")
                     }
                     
@@ -159,7 +161,7 @@ struct ContentView: View {
                         Text("Ekle")
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.blue)
+                            .background(Color.mainColor)
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }

@@ -6,7 +6,7 @@ struct TodoAppApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LaunchView() // Başlangıçta gösterilecek görünüm
                 .environmentObject(store)
                 .onAppear {
                     NotificationManager.shared.requestAuthorization()

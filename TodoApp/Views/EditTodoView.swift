@@ -47,6 +47,7 @@ struct EditTodoView: View {
                 
                 Section(header: Text("Hatırlatma")) {
                     Toggle("Hatırlatma Ekle", isOn: $isReminderEnabled)
+                        .tint(.mainColor)
                         .accessibilityIdentifier("editReminderToggle")
                     
                     if isReminderEnabled {
@@ -69,14 +70,18 @@ struct EditTodoView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("İptal") {
+                    Button(action: {
                         dismiss()
+                    }) {
+                        Text("İptal")
+                            .bold() // Kalın yap
                     }
+                    .foregroundColor(.mainColor)
                     .accessibilityIdentifier("editCancelButton")
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Kaydet") {
+                    Button(action: {
                         let updatedTodo = Todo(
                             id: todo.id,
                             title: title,
@@ -88,8 +93,12 @@ struct EditTodoView: View {
                         )
                         onUpdate(updatedTodo)
                         dismiss()
+                    }) {
+                        Text("Kaydet")
+                            .bold() // Kalın yap
                     }
                     .disabled(title.isEmpty)
+                    .foregroundColor(.mainColor)
                     .accessibilityIdentifier("editSaveButton")
                 }
             }

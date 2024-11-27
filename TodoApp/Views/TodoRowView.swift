@@ -16,7 +16,7 @@ struct TodoRowView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Image(systemName: todo.isCompleted ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(todo.isCompleted ? .green : .gray)
+                    .foregroundColor(todo.isCompleted ? Color.mainColor : .gray)
                     .onTapGesture {
                         var updatedTodo = todo
                         updatedTodo.isCompleted.toggle()
@@ -44,7 +44,7 @@ struct TodoRowView: View {
                     showingEditSheet = true
                 }) {
                     Image(systemName: "pencil")
-                        .foregroundColor(.blue)
+                        .foregroundColor(Color.mainColor)
                 }
                 .accessibilityIdentifier("editButton_\(todo.title)")  // Değişti
                 

@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C16DCB702CF708E400CDD4BE /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16DCB6F2CF708E400CDD4BE /* ColorExtensions.swift */; };
 		C1C5A15F2CF666D900ACAB4F /* TodoStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C5A15E2CF666D900ACAB4F /* TodoStoreTests.swift */; };
+		C1C67AC92CF7002A003FF451 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C67AC82CF7002A003FF451 /* LaunchView.swift */; };
 		C1CE3F622CF4646400309171 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CE3F612CF4646400309171 /* NotificationManager.swift */; };
 		C1E37C5A2CF0E12C00EF5614 /* TodoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E37C592CF0E12C00EF5614 /* TodoAppApp.swift */; };
 		C1E37C5C2CF0E12C00EF5614 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E37C5B2CF0E12C00EF5614 /* ContentView.swift */; };
@@ -44,9 +46,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C16DCB6D2CF7066C00CDD4BE /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = TodoApp/Assets.xcassets/logo.png; sourceTree = "<group>"; };
+		C16DCB6F2CF708E400CDD4BE /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		C1C5A15E2CF666D900ACAB4F /* TodoStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoStoreTests.swift; sourceTree = "<group>"; };
+		C1C67AC82CF7002A003FF451 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		C1CE3F612CF4646400309171 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		C1E37C562CF0E12C00EF5614 /* TodoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1E37C562CF0E12C00EF5614 /* Görev Listesi - To Do List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Görev Listesi - To Do List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1E37C592CF0E12C00EF5614 /* TodoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoAppApp.swift; sourceTree = "<group>"; };
 		C1E37C5B2CF0E12C00EF5614 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C1E37C5D2CF0E12F00EF5614 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -94,6 +99,7 @@
 		C1E37C4D2CF0E12C00EF5614 = {
 			isa = PBXGroup;
 			children = (
+				C16DCB6D2CF7066C00CDD4BE /* logo.png */,
 				C1E37C582CF0E12C00EF5614 /* TodoApp */,
 				C1E37C6E2CF0E12F00EF5614 /* TodoAppTests */,
 				C1E37C782CF0E12F00EF5614 /* TodoAppUITests */,
@@ -104,7 +110,7 @@
 		C1E37C572CF0E12C00EF5614 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C1E37C562CF0E12C00EF5614 /* TodoApp.app */,
+				C1E37C562CF0E12C00EF5614 /* Görev Listesi - To Do List.app */,
 				C1E37C6B2CF0E12F00EF5614 /* TodoAppTests.xctest */,
 				C1E37C752CF0E12F00EF5614 /* TodoAppUITests.xctest */,
 			);
@@ -114,6 +120,7 @@
 		C1E37C582CF0E12C00EF5614 /* TodoApp */ = {
 			isa = PBXGroup;
 			children = (
+				C1C67AC82CF7002A003FF451 /* LaunchView.swift */,
 				C1E37C892CF0E23700EF5614 /* Views */,
 				C1E37C882CF0E22F00EF5614 /* Models */,
 				C1E37C5B2CF0E12C00EF5614 /* ContentView.swift */,
@@ -169,6 +176,7 @@
 				C1E37C902CF0FA3700EF5614 /* StatisticView.swift */,
 				C1E37C922CF0FAED00EF5614 /* PieChartView.swift */,
 				C1E37C942CF101E100EF5614 /* EditTodoView.swift */,
+				C16DCB6F2CF708E400CDD4BE /* ColorExtensions.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -190,7 +198,7 @@
 			);
 			name = TodoApp;
 			productName = TodoApp;
-			productReference = C1E37C562CF0E12C00EF5614 /* TodoApp.app */;
+			productReference = C1E37C562CF0E12C00EF5614 /* Görev Listesi - To Do List.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C1E37C6A2CF0E12F00EF5614 /* TodoAppTests */ = {
@@ -304,6 +312,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1E37C932CF0FAED00EF5614 /* PieChartView.swift in Sources */,
+				C16DCB702CF708E400CDD4BE /* ColorExtensions.swift in Sources */,
+				C1C67AC92CF7002A003FF451 /* LaunchView.swift in Sources */,
 				C1E37C632CF0E12F00EF5614 /* Persistence.swift in Sources */,
 				C1E37C952CF101E100EF5614 /* EditTodoView.swift in Sources */,
 				C1E37C912CF0FA3700EF5614 /* StatisticView.swift in Sources */,
@@ -491,7 +501,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.olcay.TodoApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Görev Listesi - To Do List";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -522,7 +532,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.olcay.TodoApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Görev Listesi - To Do List";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

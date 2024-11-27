@@ -3,6 +3,7 @@ import SwiftUI
 struct StatisticsView: View {
     @ObservedObject var todoStore: TodoStore
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.presentationMode) var presentationMode
     
     private var totalTasks: Int {
         todoStore.todos.count
@@ -115,6 +116,21 @@ struct StatisticsView: View {
             .padding()
         }
         .navigationTitle("İstatistikler")
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("Geri")
+                            .bold()
+                    }
+                    .foregroundColor(.mainColor)
+                }
+            }
+        }
     }
 }
 
