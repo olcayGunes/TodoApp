@@ -2,6 +2,7 @@ import SwiftUI
 
 struct StatisticsView: View {
     @ObservedObject var todoStore: TodoStore
+    @Environment(\.colorScheme) var colorScheme
     
     private var totalTasks: Int {
         todoStore.todos.count
@@ -56,29 +57,35 @@ struct StatisticsView: View {
                     Text("Genel İstatistikler")
                         .font(.title2)
                         .bold()
+                        .accessibilityIdentifier("generalStatsTitle")
                     
                     StatCard(title: "Toplam Görev", value: "\(totalTasks)")
+                        .accessibilityIdentifier("totalTasksCard")
                     StatCard(title: "Tamamlanan", value: "\(completedTasks)")
+                        .accessibilityIdentifier("completedTasksCard")
                     StatCard(title: "Bekleyen", value: "\(pendingTasks)")
+                        .accessibilityIdentifier("pendingTasksCard")
                     StatCard(title: "Tamamlanma Oranı", value: String(format: "%.1f%%", completionRate))
+                        .accessibilityIdentifier("completionRateCard")
                 }
                 .padding()
-                .background(Color(.systemGray6))
+                .background(Color(UIColor.systemBackground))
                 .cornerRadius(12)
+                .shadow(radius: 2)
                 
                 // Öncelik Dağılımı
                 VStack(alignment: .leading, spacing: 16) {
                     Text("Öncelik Dağılımı")
                         .font(.title2)
                         .bold()
+                        .accessibilityIdentifier("priorityDistributionTitle")
                     
                     if totalTasks > 0 {
-                        // Pasta grafiği
                         PieChartView(slices: pieChartData, totalValue: totalTasks)
                             .frame(height: 250)
                             .padding(.vertical)
+                            .accessibilityIdentifier("priorityPieChart")
                         
-                        // Açıklamalar
                         VStack(spacing: 12) {
                             ForEach(priorityDistribution, id: \.0) { priority, count in
                                 HStack {
@@ -94,14 +101,16 @@ struct StatisticsView: View {
                                             .foregroundColor(.gray)
                                     }
                                 }
+                                .accessibilityIdentifier("priorityRow_\(priority)")
                             }
                         }
                         .padding(.top, 8)
                     }
                 }
                 .padding()
-                .background(Color(.systemGray6))
+                .background(Color(UIColor.systemBackground))
                 .cornerRadius(12)
+                .shadow(radius: 2)
             }
             .padding()
         }
@@ -112,17 +121,19 @@ struct StatisticsView: View {
 struct StatCard: View {
     let title: String
     let value: String
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         HStack {
             Text(title)
-                .foregroundColor(.gray)
+                .foregroundColor(.secondary)
             Spacer()
             Text(value)
                 .bold()
+                .foregroundColor(.primary)
         }
         .padding()
-        .background(Color.white)
+        .background(Color(UIColor.secondarySystemBackground))
         .cornerRadius(8)
     }
 }
@@ -132,5 +143,6 @@ struct StatisticsView_Previews: PreviewProvider {
         NavigationView {
             StatisticsView(todoStore: TodoStore())
         }
+        .preferredColorScheme(.dark)
     }
 }

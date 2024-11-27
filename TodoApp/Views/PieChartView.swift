@@ -43,11 +43,13 @@ struct PieChartView: View {
                 ForEach(0..<slices.count, id: \.self) { index in
                     PieSlice(pieSliceData: slices[index])
                         .fill(slices[index].color)
+                        .accessibilityIdentifier("pieSlice_\(slices[index].title)")
                 }
             }
             .frame(width: min(geometry.size.width, geometry.size.height),
                    height: min(geometry.size.width, geometry.size.height))
             .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+            .accessibilityIdentifier("pieChartContainer")
         }
     }
 }

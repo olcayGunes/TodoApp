@@ -7,7 +7,9 @@ struct ContentView: View {
     @State private var newTodoDescription: String = ""
     @State private var selectedPriority: Priority = .orta
     @State private var isReminderEnabled: Bool = false
-    @State private var selectedDate: Date = Date().addingTimeInterval(60) // 1 dakika sonrası
+    @State private var selectedDate: Date = Date().addingTimeInterval(120)
+    @State private var minimumDate: Date = Date()
+    @State private var datePickerTimer: Timer?
     @AppStorage("hideCompletedTasks") private var hideCompletedTasks = false
     @State private var collapsedSections: Set<String> = []
     
@@ -52,12 +54,14 @@ struct ContentView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 20)
                     .background(Color.blue.opacity(0.1))
+                    .accessibilityIdentifier("titleText")
                     .overlay(
                         NavigationLink(destination: StatisticsView(todoStore: todoStore)) {
                             Image(systemName: "chart.bar.fill")
                                 .foregroundColor(.blue)
                                 .padding()
                         }
+                        .accessibilityIdentifier("statisticsButton")
                         , alignment: .trailing
                     )
                 
@@ -67,6 +71,7 @@ struct ContentView: View {
                 }
                 .padding(.horizontal)
                 .padding(.vertical, 8)
+                .accessibilityIdentifier("hideCompletedToggle")
                 
                 // Görev ekleme formu
                 VStack(spacing: 12) {
@@ -82,6 +87,7 @@ struct ContentView: View {
                             }
                         }
                         .pickerStyle(SegmentedPickerStyle())
+                        .accessibilityIdentifier("priorityPicker")
                     }
                     
                     TextField("", text: $newTodoTitle)
@@ -100,6 +106,7 @@ struct ContentView: View {
                                 .opacity(newTodoTitle.isEmpty ? 1 : 0),
                             alignment: .leading
                         )
+                        .accessibilityIdentifier("titleTextField")
                     
                     TextEditor(text: $newTodoDescription)
                         .frame(height: 80)
@@ -118,9 +125,11 @@ struct ContentView: View {
                                 .opacity(newTodoDescription.isEmpty ? 1 : 0),
                             alignment: .topLeading
                         )
+                        .accessibilityIdentifier("descriptionTextEditor")
                     
                     HStack {
                         Toggle("Hatırlatma", isOn: $isReminderEnabled)
+                            .accessibilityIdentifier("reminderToggle")
                     }
                     
                     if isReminderEnabled {
@@ -130,12 +139,19 @@ struct ContentView: View {
                             
                             DatePicker("",
                                 selection: $selectedDate,
-                                in: Date()...,
+                                in: minimumDate...,
                                 displayedComponents: [.date, .hourAndMinute]
                             )
                             .environment(\.locale, Locale(identifier: "tr_TR"))
                             .labelsHidden()
                             .datePickerStyle(.compact)
+                            .accessibilityIdentifier("reminderDatePicker")
+                            .onAppear {
+                                startDatePickerTimer()
+                            }
+                            .onDisappear {
+                                datePickerTimer?.invalidate()
+                            }
                         }
                     }
                     
@@ -147,6 +163,7 @@ struct ContentView: View {
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }
+                    .accessibilityIdentifier("addButton")
                 }
                 .padding()
                 
@@ -161,6 +178,7 @@ struct ContentView: View {
                                             todoStore.todos[index] = updatedTodo
                                         }
                                     }
+                                    .accessibilityIdentifier("todoRow_\(todo.id)")
                                 }
                                 .onDelete { indexSet in
                                     deleteTodos(at: indexSet, in: todos)
@@ -169,6 +187,7 @@ struct ContentView: View {
                         } header: {
                             HStack {
                                 Text(date)
+                                    .accessibilityIdentifier("sectionHeader_\(date)")
                                 Spacer()
                                 if date != "Bugün" {
                                     Image(systemName: collapsedSections.contains(date) ? "chevron.right" : "chevron.down")
@@ -211,12 +230,11 @@ struct ContentView: View {
             scheduleNotification(for: todo)
         }
         
-        // Form'u sıfırla
         newTodoTitle = ""
         newTodoDescription = ""
         selectedPriority = .orta
         isReminderEnabled = false
-        selectedDate = Date().addingTimeInterval(60) // Yeni görev için 1 dakika sonrasını ayarla
+        selectedDate = Date().addingTimeInterval(120)
     }
     
     private func deleteTodos(at offsets: IndexSet, in todosList: [Todo]) {
@@ -254,6 +272,28 @@ struct ContentView: View {
         let request = UNNotificationRequest(identifier: todo.id.uuidString, content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request)
+    }
+    
+    private func startDatePickerTimer() {
+        datePickerTimer?.invalidate()
+        updateMinimumDate()
+        
+        datePickerTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            updateMinimumDate()
+        }
+    }
+    
+    private func updateMinimumDate() {
+        let calendar = Calendar.current
+        let now = Date()
+        
+        if let nextMinute = calendar.date(byAdding: .minute, value: 1, to: now) {
+            minimumDate = nextMinute
+            
+            if selectedDate < minimumDate {
+                selectedDate = minimumDate
+            }
+        }
     }
 }
 
